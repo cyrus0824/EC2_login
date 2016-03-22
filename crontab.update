@@ -1,0 +1,2 @@
+MAILTO=""
+*/2 * * * * /Users/cyrusafrasiabi/cronjobs/update_aws_instances.sh
