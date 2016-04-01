@@ -69,6 +69,8 @@ class AWSConnection:
                                                     }
         with open(os.path.join(os.path.expanduser("~"), ".aws_instances"), "w") as write_file:
             json.dump(instances, write_file)
+        with open(os.path.join(os.path.expanduser("~"), ".aws_autocomplete"), "w") as write_file:
+            write_file.write(" ".join(self.get_name_info(i=instances).keys()))
         return instances
 
     def get_names_dict(self):
@@ -80,9 +82,10 @@ class AWSConnection:
                     names.setdefault(iname, []).append( (profile, region) )
         return names
 
-    def get_name_info(self):
+    def get_name_info(self, i=None):
         info = {}
-        i = self.get_all_connectable_instances()
+        if not i:
+            i = self.get_all_connectable_instances()
         for (profile, p_dict) in i.items():
             for (region, r_dict) in p_dict.items():
                 for (iname, i_dict) in r_dict.items():
